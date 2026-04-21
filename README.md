@@ -2,12 +2,11 @@
 
 ## Overview
 
-Real-world bird sound classification systems fail under noisy environmental conditions (wind, rain, traffic, etc.).
-This project proposes a **hybrid augmentation strategy** combining Gaussian noise and diffusion-generated noise to improve robustness.
+Bird sound classification systems degrade significantly under real-world noise (wind, rain, traffic), making them unreliable for ecological monitoring.
 
-The model is built using the **Audio Spectrogram Transformer (AST)** and evaluated under real environmental noise conditions using the **ESC-50 dataset**.
+This project introduces a **hybrid augmentation pipeline** combining Gaussian noise (diversity) and diffusion-generated noise (realism) to improve robustness across varying noise levels.
 
----
+Built on the **Audio Spectrogram Transformer (AST)**, the proposed method significantly improves performance under extreme noise conditions (up to +64% absolute gain at 0 dB over baseline).
 
 ## Key Contributions
 
@@ -34,7 +33,27 @@ The model is built using the **Audio Spectrogram Transformer (AST)** and evaluat
 
 
 ---
+## Pipeline
 
+Audio → Spectrogram → Augmentation (Gaussian / Diffusion / Hybrid) → AST → Classification
+
+- Feature extraction: Log-mel spectrograms  
+- Augmentation applied during training  
+- Evaluation across controlled noise levels (10 dB, 5 dB, 0 dB)
+---
+## Implementation Details
+
+- Modular training and evaluation pipelines  
+- SLURM-based training for large-scale experiments  
+- Controlled experiments across multiple noise regimes  
+- Debugged normalization and training instability issues
+---
+## Reproducibility
+
+- Fixed random seeds for experiments  
+- Consistent preprocessing across all models  
+- Same evaluation protocol for fair comparison
+---
 ## Results
 
 | Model     | Clean     | 10 dB     | 5 dB      | 0 dB      |
